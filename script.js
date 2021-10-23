@@ -29,6 +29,7 @@ loadSprite("stairs", "VghkL08.png");
 loadSprite("bg", "u4DVsx6.png");
 
 scene("game", () => {
+  layers(["bg", "obj", "ui"], "obj");
   const maps = [
     [
       "ycc)cc^ccw",
@@ -74,6 +75,10 @@ scene("game", () => {
     "(": [sprite("fire-pot"), solid()],
   };
   addLevel(maps[level], levelCfg);
+
+  add([sprite("bg"), layer("bg")]);
+
+  add([text("level " + parseInt(level + 1)), pos(400, 465), scale(2)]);
 });
 
-start("game");
+start("game", { level: 0, score: 0 });
