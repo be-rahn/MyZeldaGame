@@ -2,10 +2,13 @@ kaboom({
   global: true,
   fullscreen: true,
   scale: 1,
-  debug: true,
+    debug: true,
+  clearColor: [0, 0, 1, 1],
 });
 
 const MOVE_SPEED = 120
+const SLICER_SPEED = 100
+const SKELETOR_SPEED = 60
 
 loadRoot("https://i.imgur.com/");
 loadSprite("link-going-left", "1Xq9biB.png");
@@ -32,6 +35,7 @@ loadSprite("bg", "u4DVsx6.png");
 
 scene('game', ({ level, score }) => {
     layers(['bg', 'obj', 'ui'], 'obj')
+
     const maps = [
         [
             "ycc)cc^ccw",
@@ -76,9 +80,20 @@ scene('game', ({ level, score }) => {
         ")": [sprite("lanterns"), solid()],
         "(": [sprite("fire-pot"), solid()],
     };
+
     addLevel(maps[level], levelCfg);
 
     add([sprite("bg"), layer("bg")]);
+
+    const scoreLabel = add([
+    text('0'),
+    pos(400, 450),
+    layer('ui'),
+    {
+      value: score,
+    },
+    scale(2),
+  ])
 
     add([text("level " + parseInt(level + 1)), pos(400, 465), scale(2)]);
 
@@ -124,6 +139,49 @@ scene('game', ({ level, score }) => {
         player.move(0, MOVE_SPEED)
         player.dir = vec2(0, 1)
     })
+
+    function spawnKaboom(p) {
+        const obj = add([sprite('kaboom'), pos(p), 'kaboom'])
+        wait(1, () => {
+            destroy(obj)
+        })
+    }
+    
+    keyPress('space', () => {
+        spawnKaboom(player.pos.add(player.dir.scale(48)))
+    })
+
+    player.collides('door', (d) => {
+        destroy(d)
+    })
+
+    collides('kaboom', 'skeletor', (k, s) => {
+        camShake(4)
+        wait(1, () => {
+            destroy(k)
+        })
+        destroy(s)
+        scoreLabel.value++
+        scoreLabel.text = scoreLabel.value
+    })
+
+    action('slicer', (s) => {
+        s.move(s.dir * SLICER_SPEED, 0)
+    })
+
+    collides('slicer', 'wall', (s) => {
+        s.dir = -s.dir
+    })
+
+      action('skeletor', (s) => {
+    s.move(0, s.dir * SKELETOR_SPEED)
+    s.timer -= dt()
+    if (s.timer <= 0) {
+      s.dir = -s.dir
+      s.timer = rand(5)
+    }
+  })
+
 }
 
 
