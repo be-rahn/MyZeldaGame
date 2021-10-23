@@ -42,7 +42,13 @@ scene("game", () => {
     x: [sprite("bottom-left-wall"), solid()],
     y: [sprite("top-left-wall"), solid()],
     z: [sprite("bottom-right-wall"), solid()],
-    "%": [sprite("left-door"), solid()],
+    "%": [sprite("left-door"), solid(), "door"],
+    "^": [sprite("top-door"), "next-level"],
+    $: [sprite("stairs"), "next-level"],
+    "*": [sprite("slicer"), "slicer", { dir: -1 }, "dangerous"],
+    "}": [sprite("skeletor"), "dangerous", "skeletor", { dir: -1, timer: 0 }],
+    ")": [sprite("lanterns"), solid()],
+    "(": [sprite("fire-pot"), solid()],
   };
   addLevel(map, levelCfg);
 });
