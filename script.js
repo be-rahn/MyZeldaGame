@@ -29,7 +29,30 @@ loadSprite("stairs", "VghkL08.png");
 loadSprite("bg", "u4DVsx6.png");
 
 scene("game", () => {
-  const map = ["a", "a", "a", "a", "a", "a", "a", "a", "a"];
+  const maps = [
+    [
+      "ycc)cc^ccw",
+      "a        b",
+      "a      * b",
+      "a    (   b",
+      "%        b",
+      "a    (   b",
+      "a   *    b",
+      "a        b",
+      "xdd)dd)ddz",
+    ],
+    [
+      "yccccccccw",
+      "a        b",
+      ")        )",
+      "a        b",
+      "a        b",
+      "a    $   b",
+      ")   }    )",
+      "a        b",
+      "xddddddddz",
+    ],
+  ];
 
   const levelCfg = {
     width: 48,
@@ -50,7 +73,7 @@ scene("game", () => {
     ")": [sprite("lanterns"), solid()],
     "(": [sprite("fire-pot"), solid()],
   };
-  addLevel(map, levelCfg);
+  addLevel(maps[level], levelCfg);
 });
 
 start("game");
