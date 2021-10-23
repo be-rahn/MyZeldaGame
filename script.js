@@ -28,6 +28,28 @@ loadSprite("kaboom", "o9WizfI.png");
 loadSprite("stairs", "VghkL08.png");
 loadSprite("bg", "u4DVsx6.png");
 
-scene("game", () => {});
+scene("game", () => {
+
+    const map = [
+        'a',
+        'a',
+        'a',
+        'a',
+        'a',
+        'a',
+        'a',
+        'a',
+        'aaaaaaaaa',
+
+    ]
+
+    const levelCfg = {
+        width: 48;
+        height: 48;
+        'a': [sprite('left-wall'), solid()]
+    }
+addLevel(map, levelCfg)
+
+});
 
 start("game");
