@@ -196,3 +196,11 @@ scene("lose", ({ score }) => {
 });
 
 start("game", { level: 0, score: 0 });
+
+const music = play("OverworldlyFoe", {
+  volume: 0.8,
+  loop: true,
+});
+music.play();
+
+//Music by Florian Stracker
